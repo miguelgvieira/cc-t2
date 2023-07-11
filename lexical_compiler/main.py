@@ -3,50 +3,43 @@ import sys
 from alguma_lexer import AlgumaLexerAnalyzer
 
 """ Main function do nosso analisador léxico e sintático
-    Recebe a pasta de entrada e a pasta de saída como argumentos. Se a pasta de saída
-    não existir, ela é criada.
-
-    Para cada arquivo na pasta de entrada, o analisador léxico é chamado e o arquivo
-    de saída é gerado na pasta de saída com o mesmo nome do arquivo de entrada.
+    Recebe o arquivo de entrada e o arquivo de saída como argumentos. Se a pasta destino,
+    onde o arquivo de saída será escrito não existir, ela é criada, assim como o arquivo.
 
     Caso o arquivo de saída já exista, ele é sobrescrito.
 
     Exemplo de uso:
     ```
-    $ python3 main.py input output
+    $ python3 main.py input/arquivo_teste1.txt output/arquivo_teste1.txt
     ```
-    Onde input é a pasta de entrada e output é a pasta de saída.
+
+    Onde input/arquivo_teste1.txt é o arquivo de entrada e output/arquivoteste1.txt é o arquivo
+    de saída.
 
     O analisador léxico tem sua lógica implementado em lexical_compiler/alguma_lexer.py
-
 """
 
 def main(args):
     # Verifica se os argumentos foram passados corretamente
     if len(args) != 2:
-        print("Usage: python3 main.py input_folder output_folder")
+        print("Usage: python3 main.py input/file.txt output/file.txt")
         sys.exit(1)
 
-    # Verifica se a pasta de entrada existe
-    if not os.path.isdir(args[0]):
-        print("Input folder does not exist")
+    # Verifica se o arquivo de entrada existe
+    if not os.path.isfile(args[0]):
+        print(args[0])
+        print("Input file does not exist")
         sys.exit(1)
     
-    # Verifica se a pasta de saída existe, se não existir, cria
-    if not os.path.isdir(args[1]):
-        os.mkdir(args[1])
+    # Verifica se a pasta destino existe, se não existir, cria
+    if not os.path.isdir(os.path.dirname(args[1])):
+        os.makedirs(os.path.dirname(args[1]))
 
     # Instancia o analisador léxico
     alguma_lexer = AlgumaLexerAnalyzer()
 
-    # Pega todos os arquivos da pasta de entrada
-    files_to_analyze = os.listdir(args[0])
-
     # Para cada arquivo, chama o analisador léxico
-
-    for file in files_to_analyze:
-        print(f"Analyzing {file}")
-        alguma_lexer.analyse_file(f"{args[0]}/{file}", f"{args[1]}/{file}")
+    alguma_lexer.analyse_file(args[0], args[1])
 
 if __name__ == '__main__':
     # main(["input", "output"])
