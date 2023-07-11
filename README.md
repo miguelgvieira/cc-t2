@@ -1,6 +1,6 @@
 # cc-t1
 
-Repositório com o trabalho 3 de construção de compiladores.
+Repositório com o trabalho 2 de construção de compiladores.
 
 # Aluno
 
